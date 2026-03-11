@@ -7,7 +7,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await Command.execute('Main.openUri', 'chat-network://not-found')
 
   // assert
-  const errorMessage = Locator('.chatNetWorkViewError')
+  const errorMessage = Locator('.chatNetworkError')
   await expect(errorMessage).toBeVisible()
   await expect(errorMessage).toContainText('No chat session found for sessionId "not-found".')
 }

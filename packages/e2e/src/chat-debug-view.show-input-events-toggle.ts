@@ -7,7 +7,7 @@ export const skip = 1
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
   await Command.execute('Main.openUri', 'chat-network://e2e-session-toggle')
-  await expect(Locator('.chatNetWorkView')).toBeVisible()
+  await expect(Locator('.chatNetwork')).toBeVisible()
 
   const events = [
     {
@@ -31,7 +31,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   ]
   await Command.execute('chatNetWork.setEvents', events)
 
-  const eventNodes = Locator('.chatNetWorkViewEvent')
+  const eventNodes = Locator('.chatNetworkEvent')
   const toggle = Locator('input[name="showInputEvents"]')
 
   // assert hidden by default

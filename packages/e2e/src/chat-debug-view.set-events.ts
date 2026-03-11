@@ -5,7 +5,7 @@ export const name = 'chat-network-worker.set-events'
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
   await Command.execute('Main.openUri', 'chat-network://e2e-session-render')
-  await expect(Locator('.chatNetWorkView')).toBeVisible()
+  await expect(Locator('.chatNetwork')).toBeVisible()
 
   const events = [
     {
@@ -26,7 +26,7 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   await Command.execute('chatNetWork.setEvents', events)
 
   // assert
-  const eventNodes = Locator('.chatNetWorkViewEvent')
+  const eventNodes = Locator('.chatNetworkEvent')
   await expect(eventNodes).toHaveCount(2)
   await expect(eventNodes.nth(0)).toContainText('"type": "handle-submit"')
   await expect(eventNodes.nth(1)).toContainText('"type": "handle-response"')
