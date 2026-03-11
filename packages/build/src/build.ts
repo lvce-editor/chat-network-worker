@@ -5,7 +5,7 @@ import { bundleDebugViewJs } from './bundleJs.ts'
 import { root } from './root.ts'
 
 const dist = join(root, '.tmp', 'dist')
-const debugViewDist = join(root, '.tmp', 'dist-chat-network-view')
+const debugViewDist = join(root, '.tmp', 'dist-chat-network-worker')
 const networkWorkerDist = join(root, '.tmp', 'dist-chat-network-worker')
 const toolWorkerDist = join(root, '.tmp', 'dist-chat-tool-worker')
 
@@ -68,7 +68,7 @@ const version = await getVersion()
 await cp(join(root, 'README.md'), join(dist, 'README.md'))
 await cp(join(root, 'LICENSE'), join(dist, 'LICENSE'))
 
-const debugViewPackageJson = await readJson(join(root, 'packages', 'chat-network-view', 'package.json'))
+const debugViewPackageJson = await readJson(join(root, 'packages', 'chat-network-worker', 'package.json'))
 
 delete debugViewPackageJson.scripts
 delete debugViewPackageJson.dependencies

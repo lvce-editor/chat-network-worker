@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'chat-network-view.filter-events'
+export const name = 'chat-network-worker.filter-events'
 
 export const skip = 1
 

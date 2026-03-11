@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'chat-network-view.set-events'
+export const name = 'chat-network-worker.set-events'
 
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange

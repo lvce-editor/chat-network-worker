@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'chat-network-view.show-input-events-toggle'
+export const name = 'chat-network-worker.show-input-events-toggle'
 
 export const skip = 1
 
