@@ -4,7 +4,7 @@
   "description": "Chat Network Worker",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lvce-editor/chat-view.git"
+    "url": "git+https://github.com/lvce-editor/chat-network-worker.git"
   },
   "license": "MIT",
   "author": "Lvce Editor",
