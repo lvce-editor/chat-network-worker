@@ -7,7 +7,8 @@ export const skip = 1
 export const test: Test = async ({ Command, expect, Locator }) => {
   // arrange
   await Command.execute('Main.openUri', 'chat-network://e2e-session-filter')
-  await expect(Locator('.chatNetwork')).toBeVisible()
+  const chatNetwork = Locator('.chatNetwork')
+  await expect(chatNetwork).toBeVisible()
 
   const events = [
     {
@@ -38,5 +39,6 @@ export const test: Test = async ({ Command, expect, Locator }) => {
   // assert
   const eventNodes = Locator('.chatNetworkEvent')
   await expect(eventNodes).toHaveCount(1)
-  await expect(eventNodes.nth(0)).toContainText('"value": "Beta response"')
+  const firstEventNode = eventNodes.nth(0)
+  await expect(firstEventNode).toContainText('"value": "Beta response"')
 }
