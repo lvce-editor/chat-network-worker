@@ -4,7 +4,7 @@ import { getFetchThrownErrorResult } from '../RequestShared/GetFetchThrownErrorR
 import { getHeadersObject } from '../RequestShared/GetHeadersObject.ts'
 import { getRequestInit } from '../RequestShared/GetRequestInit.ts'
 
-export interface StreamingApiRequestSuccessResult {
+interface StreamingApiRequestSuccessResult {
   readonly body: readonly unknown[]
   readonly headers: Record<string, string>
   readonly statusCode: number
