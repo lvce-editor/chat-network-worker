@@ -10,7 +10,7 @@ export interface ApiRequestErrorResult {
   readonly type: 'error'
 }
 
-export interface ApiRequestSuccessResult {
+interface ApiRequestSuccessResult {
   readonly body: unknown
   readonly headers: Record<string, string>
   readonly statusCode: number
