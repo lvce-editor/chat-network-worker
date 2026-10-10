@@ -1,4 +1,4 @@
-import { cp, readFile, writeFile } from 'node:fs/promises'
+import { cp, glob, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { root } from './root.ts'
@@ -16,20 +16,27 @@ const { commitHash } = await sharedProcess.exportStatic({
 await cp(join(root, '.tmp', 'dist-chat-network-worker', 'dist'), join(root, 'dist', commitHash, 'packages', 'chat-network-worker', 'dist'), {
   recursive: true,
 })
-const indexPath = join(root, 'dist', 'index.html')
-const content = await readFile(indexPath, 'utf8')
-const configElement = content.match(/<script id="Config" type="application\/json">([\s\S]*?)<\/script>/)
-if (!configElement) {
+let configCount = 0
+for await (const relativePath of glob('**/*.html', { cwd: join(root, 'dist') })) {
+  const indexPath = join(root, 'dist', relativePath)
+  const content = await readFile(indexPath, 'utf8')
+  const configElement = content.match(/<script id="Config" type="application\/json">([\s\S]*?)<\/script>/)
+  if (!configElement) {
+    continue
+  }
+  const config = JSON.parse(configElement[1])
+  const key = 'develop.chatNetworkWorkerPath'
+  if (!config.workerUrls?.[key]) {
+    throw new Error(`Chat network worker URL not found in ${relativePath}`)
+  }
+  config.workerUrls[key] = `/chat-network-worker/${commitHash}/packages/chat-network-worker/dist/chatNetworkWorkerMain.js`
+  await writeFile(
+    indexPath,
+    content.replace(configElement[0], `<script id="Config" type="application/json">${JSON.stringify(config, null, 2)}</script>`),
+  )
+  configCount++
+}
+if (!configCount) {
   throw new Error('Static runtime config not found')
 }
-const config = JSON.parse(configElement[1])
-const key = 'develop.chatNetworkWorkerPath'
-if (!config.workerUrls?.[key]) {
-  throw new Error('Chat network worker URL not found')
-}
-config.workerUrls[key] = `/chat-network-worker/${commitHash}/packages/chat-network-worker/dist/chatNetworkWorkerMain.js`
-await writeFile(
-  indexPath,
-  content.replace(configElement[0], `<script id="Config" type="application/json">${JSON.stringify(config, null, 2)}</script>`),
-)
 await cp(join(root, 'dist'), join(root, '.tmp', 'static'), { recursive: true })
